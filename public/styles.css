@@ -1,0 +1,398 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --primary: #4f46e5;
+  --primary-light: #818cf8;
+  --primary-dark: #4338ca;
+  --secondary: #10b981;
+  --dark: #1f2937;
+  --light: #f9fafb;
+  --danger: #ef4444;
+  --success: #10b981;
+  --gray: #6b7280;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --input-bg: rgba(255, 255, 255, 0.8);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  overflow-x: hidden;
+}
+
+.background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: linear-gradient(45deg, #4f46e5, #10b981);
+  z-index: -1;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  animation: float 10s infinite ease-in-out;
+}
+
+.shape:nth-child(1) {
+  width: 500px;
+  height: 500px;
+  top: -250px;
+  right: -100px;
+  opacity: 0.4;
+  animation-delay: 0s;
+}
+
+.shape:nth-child(2) {
+  width: 400px;
+  height: 400px;
+  bottom: -200px;
+  left: -100px;
+  opacity: 0.3;
+  animation-delay: 5s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 1.5rem;
+  z-index: 1;
+}
+
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+  }
+}
+
+.logo-circle i {
+  font-size: 28px;
+  color: white;
+}
+
+.logo h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: linear-gradient(45deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.form-header h2 {
+  font-size: 1.5rem;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+}
+
+.form-header p {
+  color: var(--gray);
+  font-size: 0.9rem;
+}
+
+.form-header a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.form-header a:hover {
+  text-decoration: underline;
+}
+
+.form-section {
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  transition: all 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.input-group label {
+  position: absolute;
+  left: 2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray);
+  pointer-events: none;
+  transition: all 0.3s;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: 0;
+  left: 1rem;
+  font-size: 0.75rem;
+  padding: 0 5px;
+  background-color: white;
+  color: var(--primary);
+}
+
+.input-group i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray);
+  transition: all 0.3s;
+}
+
+.input-group input:focus ~ i {
+  color: var(--primary);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+}
+
+.btn-text {
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.btn-icon {
+  position: absolute;
+  right: -20px;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.btn-submit:hover .btn-text {
+  transform: translateX(-10px);
+}
+
+.btn-submit:hover .btn-icon {
+  right: 20px;
+  opacity: 1;
+}
+
+.message {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  text-align: center;
+  transition: all 0.3s;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.message.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  max-height: 100px;
+  opacity: 1;
+}
+
+.message.success {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--success);
+  max-height: 100px;
+  opacity: 1;
+}
+
+/* Make inputs have empty content so the labels work properly */
+input:not(:focus):not(:placeholder-shown) ~ label {
+  top: 0;
+  left: 1rem;
+  font-size: 0.75rem;
+  padding: 0 5px;
+  background-color: white;
+  color: var(--primary);
+}
+
+input {
+  /* This makes the input have "content" for the :not(:placeholder-shown) selector */
+  /* The color is transparent so it doesn't show */
+  color: var(--dark);
+}
+
+input::placeholder {
+  /* Hide the placeholder text */
+  color: transparent;
+}
+
+/* Animations */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes success-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.success-animation {
+  animation: success-pulse 1.5s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .logo-circle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .logo h1 {
+    font-size: 1.5rem;
+  }
+}
+

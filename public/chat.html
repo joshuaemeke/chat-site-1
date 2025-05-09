@@ -1,0 +1,43 @@
+switch (page) {
+      case "home":
+        content = `
+          <div class="placeholder-content">
+            <i class="fas fa-home fa-3x"></i>
+            <h3>Home Dashboard</h3>
+            <p>This is your personal dashboard. View your account information and settings here.</p>
+          </div>
+        `
+        break
+      case "chat":
+        content = `
+        <div class="chat-container">
+          <div class="chat-sidebar">
+            <div class="chat-sidebar-header">
+              <h3><i class="fas fa-users"></i> Users</h3>
+            </div>
+            <div class="user-list" id="user-list">
+              <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i> Loading users...
+              </div>
+            </div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-header">
+              <h3 id="chat-title"><i class="fas fa-comments"></i> Select a user to chat</h3>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+              <div class="no-chat-selected">
+                <i class="fas fa-comments fa-3x"></i>
+                <p>Select a user from the list to start chatting</p>
+              </div>
+            </div>
+            <div class="chat-input">
+              <textarea id="message-input" placeholder="Type a message..." disabled></textarea>
+              <button id="send-message-btn" disabled>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `
