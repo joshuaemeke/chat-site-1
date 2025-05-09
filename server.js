@@ -1,64 +1,70 @@
 const express = require("express");
 const session = require("express-session");
-const bcrypt = require("bcrypt");
 const path = require("path");
-const app = express();
-const port = 3000;
+const http = require("http");
+const { Server } = require("socket.io");
 
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+const port = 3000;
 const users = [];
 
+const sessionMiddleware = session({
+  secret: "chat_secret",
+  resave: false,
+  saveUninitialized: false
+});
+
+app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session({
-  secret: "secretkey",
-  resave: false,
-  saveUninitialized: false
-}));
+// Bind session to Socket.IO
+io.engine.use(sessionMiddleware);
 
-// Home redirects to login
-app.get("/", (req, res) => {
-  res.redirect("/index.html");
-});
-
-// Signup logic
-app.post("/signup", async (req, res) => {
+// --- Auth Routes (example only, assume you've implemented) ---
+app.post("/login", (req, res) => {
   const { username, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  const existingUser = users.find(u => u.username === username);
-  if (existingUser) return res.send("Username already exists");
-
-  users.push({ username, password: hashedPassword });
-  res.redirect("/index.html");
-});
-
-// Login logic
-app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
-  const user = users.find(u => u.username === username);
-
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.send("Invalid credentials");
-  }
-
-  req.session.user = user.username;
+  const user = users.find(u => u.username === username && u.password === password);
+  if (!user) return res.send("Invalid credentials");
+  req.session.username = username;
   res.redirect("/chat.html");
 });
 
-// Protect chat page
-app.get("/chat.html", (req, res, next) => {
-  if (!req.session.user) return res.redirect("/index.html");
-  next();
+app.post("/signup", (req, res) => {
+  const { username, password } = req.body;
+  if (users.find(u => u.username === username)) return res.send("Username exists");
+  users.push({ username, password });
+  res.redirect("/index.html");
 });
 
-// Logout
+app.get("/chat.html", (req, res) => {
+  if (!req.session.username) return res.redirect("/index.html");
+  res.sendFile(path.join(__dirname, "public", "chat.html"));
+});
+
 app.get("/logout", (req, res) => {
-  req.session.destroy(() => {
-    res.redirect("/index.html");
+  req.session.destroy(() => res.redirect("/index.html"));
+});
+
+// --- Socket.IO logic with session-aware usernames ---
+io.on("connection", (socket) => {
+  const req = socket.request;
+  const username = req.session.username || "Anonymous";
+
+  console.log(`${username} connected`);
+
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", { user: username, text: msg });
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`${username} disconnected`);
   });
 });
 
-app.listen(port, () => {
-  console.log(`Chat app listening at http://localhost:${port}`);
+server.listen(port, () => {
+  console.log(`Chat app listening on http://localhost:${port}`);
 });
