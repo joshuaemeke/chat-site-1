@@ -1,27 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat - Chat App</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 h-screen flex flex-col">
-  <header class="bg-blue-600 text-white text-center py-4 shadow-md">
-    <h1 class="text-2xl font-bold">Chat App</h1>
-  </header>
-  <main class="flex-1 overflow-y-auto p-4">
-    <div id="chat-box" class="space-y-2 max-h-[70vh] overflow-y-auto mb-4">
-      <!-- Chat messages will appear here -->
-    </div>
-    <form id="chat-form" class="flex space-x-2">
-      <input type="text" id="message" placeholder="Type your message..." required
-             class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <button type="submit"
-              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-        Send
-      </button>
-    </form>
-  </main>
-</body>
-</html>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+  const form = document.getElementById("chat-form");
+  const input = document.getElementById("message");
+  const chatBox = document.getElementById("chat-box");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (input.value.trim()) {
+      socket.emit("chat message", input.value);
+      input.value = "";
+    }
+  });
+
+  socket.on("chat message", function (msg) {
+    const msgDiv = document.createElement("div");
+    msgDiv.innerHTML = `<strong>${msg.user}:</strong> ${msg.text}`;
+    msgDiv.className = "bg-white p-2 rounded shadow";
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  });
+</script>
