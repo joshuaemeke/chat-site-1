@@ -1,43 +1,27 @@
-switch (page) {
-      case "home":
-        content = `
-          <div class="placeholder-content">
-            <i class="fas fa-home fa-3x"></i>
-            <h3>Home Dashboard</h3>
-            <p>This is your personal dashboard. View your account information and settings here.</p>
-          </div>
-        `
-        break
-      case "chat":
-        content = `
-        <div class="chat-container">
-          <div class="chat-sidebar">
-            <div class="chat-sidebar-header">
-              <h3><i class="fas fa-users"></i> Users</h3>
-            </div>
-            <div class="user-list" id="user-list">
-              <div class="loading-spinner">
-                <i class="fas fa-spinner fa-spin"></i> Loading users...
-              </div>
-            </div>
-          </div>
-          <div class="chat-main">
-            <div class="chat-header">
-              <h3 id="chat-title"><i class="fas fa-comments"></i> Select a user to chat</h3>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-              <div class="no-chat-selected">
-                <i class="fas fa-comments fa-3x"></i>
-                <p>Select a user from the list to start chatting</p>
-              </div>
-            </div>
-            <div class="chat-input">
-              <textarea id="message-input" placeholder="Type a message..." disabled></textarea>
-              <button id="send-message-btn" disabled>
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chat - Chat App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 h-screen flex flex-col">
+  <header class="bg-blue-600 text-white text-center py-4 shadow-md">
+    <h1 class="text-2xl font-bold">Chat App</h1>
+  </header>
+  <main class="flex-1 overflow-y-auto p-4">
+    <div id="chat-box" class="space-y-2 max-h-[70vh] overflow-y-auto mb-4">
+      <!-- Chat messages will appear here -->
+    </div>
+    <form id="chat-form" class="flex space-x-2">
+      <input type="text" id="message" placeholder="Type your message..." required
+             class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button type="submit"
+              class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+        Send
+      </button>
+    </form>
+  </main>
+</body>
+</html>
