@@ -10,6 +10,7 @@
     "express": "latest",
     "path": "latest",
     "express-session": "latest",
+     "socket.io": "latest",
     "fs": "latest",
     "crypto": "latest",
     "multer": "latest",
