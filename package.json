@@ -9,6 +9,7 @@
    "dependencies": {
     "express": "latest",
     "path": "latest",
+    "express-session": "latest",
     "fs": "latest",
     "crypto": "latest",
     "multer": "latest",
